@@ -1,5 +1,6 @@
 import csv
 from swahiliArabicWebScraper import YoutubeScrape
+import time
 
 def main():
     search_queries = input("Enter search queries (separate by commas): ")
@@ -17,10 +18,25 @@ def main():
 
         #handle duplicates
         processed_video_ids = set()
+        queries = 0
         for i in search_queries_list:
+            queries += 1
             if minutes > max_minutes:
                 break
             scraper = YoutubeScrape(i, output_file, max_minutes, processed_video_ids)
             minutes += scraper.process()
 
-main()
+    print("Number of queries processed: ", queries)
+    print("Total minutes processed: ", minutes)
+
+if __name__ == "__main__":
+    start_time = time.time()
+
+    main()
+
+    end_time = time.time()
+
+    elapsed_time = end_time - start_time
+
+    # Display runtime in seconds
+    print(f"\nProgram completed in {elapsed_time:.2f} seconds.")
